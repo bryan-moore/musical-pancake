@@ -1,7 +1,40 @@
 ﻿
 @{
-    ViewBag.Title = "ToDoListPage";
+    ViewBag.Title = "To Do List";
 }
 
-<h2>ToDoListPage</h2>
+<h2>To Do List</h2>
+
+<button role="button" class="btn btn-default btn-md btn-primary">Create new task</button>
+
+<div class="new-task-fields">
+
+</div>
+
+<div class="panel panel-default new-task-container">
+    <div class="panel-body">
+        <label for="task-text">Task name:</label>
+        <input type="text" class="form-control" id="task-text">
+        <button role="button" class="btn btn-default btn-md btn-primary">Add task</button>
+    </div>
+</div>
+
+<ul id="tasks">
+    <li class="task">
+        <span>Temp task 1</span>
+        <input type="checkbox" checked />
+    </li>
+    <li class="task">
+        <span>Temp task 2</span>
+        <input type="checkbox" />
+    </li>
+    <li class="task">
+        <span>Temp task 3</span>
+        <input type="checkbox" />
+    </li>
+
+    <li class="alert alert-success">
+        <span>Yay! You have no tasks.</span>
+    </li>
+</ul>
 

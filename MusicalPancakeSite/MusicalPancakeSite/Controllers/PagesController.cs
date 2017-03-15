@@ -6,12 +6,10 @@ using System.Web.Mvc;
 
 namespace MusicalPancakeSite.Controllers
 {
-    public class ToDoListController : Controller
+    public class PagesController : Controller
     {
         public ActionResult ToDoListPage()
         {
-            ViewBag.Message = "Hello world!";
-
             return View();
         }
     }
