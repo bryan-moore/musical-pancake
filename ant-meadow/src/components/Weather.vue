@@ -14,7 +14,9 @@
         <h5>{{ [item.validTime] | moment(dateTimeFormat) }}</h5>
         <table>
           <tr v-for="param in item.parameters" :key="param.name" class="param">
-            <td :class="param.name" class="param-name">{{ param.name }}</td>
+            <td :class="param.name" class="param-name">
+              {{ GetWeatherParam.getParamName(param.name) }}
+            </td>
             <td class="param-value">{{ param.values[0] }}</td>
             <td class="param-unit">{{ param.unit }}</td>
           </tr>
@@ -25,6 +27,7 @@
 </template>
 
 <script>
+import GetWeatherParam from "./GetParamName";
 const DateTimeFormat = "ddd, MMM Do YYYY, hh:mm";
 const weatherEndpoint =
   "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/18/lat/59/data.json";
@@ -100,10 +103,6 @@ li {
   .tstm,
   .gust,
   .Wsymb2 {
-    opacity: 1;
-    &:after {
-      opacity: 1;
-    }
   }
   .spp {
     &:after {
