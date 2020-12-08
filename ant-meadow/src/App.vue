@@ -1,25 +1,27 @@
 <template>
   <div id="app">
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <Header/>
-    <Weather/>
-    <Footer/>
+    <Header />
+    <Clock />
+    <Weather />
+    <Footer />
   </div>
 </template>
 
 <script>
-import Header from './components/Header'
-import Footer from './components/Footer'
-import Weather from './components/Weather'
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Weather from "./components/Weather";
+import Clock from "./components/Clock.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Header,
     Footer,
-    Weather
-  }
-}
+    Clock,
+    Weather,
+  },
+};
 </script>
 
 <style>

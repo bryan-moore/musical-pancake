@@ -5,19 +5,26 @@
       Approved Time: {{ weatherApprovedTime[0] | moment(dateTimeFormat) }}
     </h4>
     <h4>Reference Time: {{ weatherReference[0] | moment(dateTimeFormat) }}</h4>
+    <h5>Location: Myrängen</h5>
     <ul class="forecast">
       <li
-        v-for="item in weatherData"
+        v-for="item in weatherData.slice(0, 1)"
         :key="item.validTime"
         class="forecast-item"
       >
         <h5>{{ [item.validTime] | moment(dateTimeFormat) }}</h5>
         <table>
-          <tr v-for="param in item.parameters" :key="param.name" class="param">
-            <td :class="param.name" class="param-name">{{ param.name }}</td>
-            <td>{{ myTestThing(param.name) }}</td>
-            <td class="param-value">{{ param.values[0] }}</td>
-            <td class="param-unit">{{ param.unit }}</td>
+          <tr
+            v-for="parameterCode in item.parameters"
+            :key="parameterCode.name"
+            class="parameterCode"
+            :class="parameterCode.name"
+          >
+            <td class="parameterCode-name">
+              {{ fetchParameterNames(parameterCode.name) }}
+            </td>
+            <td class="parameterCode-value">{{ parameterCode.values[0] }}</td>
+            <td class="parameterCode-unit">{{ parameterCode.unit }}</td>
           </tr>
         </table>
       </li>
@@ -26,10 +33,10 @@
 </template>
 
 <script>
-import ApiParamNameConverter from "../utilities/ApiParamNameConverter.ts";
-const DateTimeFormat = "ddd, MMM Do YYYY, hh:mm";
+// import ApiParamNameConverter from "../utilities/ApiParamNameConverter.ts";
+const DateTimeFormat = "ddd, MMM Do YYYY, HH:mm";
 const weatherEndpoint =
-  "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/18/lat/59/data.json";
+  "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/18.033046/lat/59.245421/data.json";
 
 export default {
   data() {
@@ -54,8 +61,73 @@ export default {
       });
   },
   methods: {
-    myTestThing: function (param) {
-      return new ApiParamNameConverter(param);
+    fetchParameterNames: function (parameterCode) {
+      if (parameterCode === "msl") {
+        return "Air pressure";
+      }
+      if (parameterCode === "t") {
+        return "Air temperture";
+      }
+      if (parameterCode === "vis") {
+        return "Horizontal visibility";
+      }
+      if (parameterCode === "wd") {
+        return "Wind direction";
+      }
+      if (parameterCode === "ws") {
+        return "Wind speed";
+      }
+      if (parameterCode === "r") {
+        return "Relative humidity";
+      }
+      if (parameterCode === "tstm") {
+        return "Thunder probability";
+      }
+      if (parameterCode === "tcc_mean") {
+        return "Mean value of total cloud cover	";
+      }
+      if (parameterCode === "lcc_mean") {
+        return "Mean value of low level cloud cover";
+      }
+      if (parameterCode === "mcc_mean") {
+        return "Mean value of medium level cloud cover";
+      }
+      if (parameterCode === "hcc_mean") {
+        return "Mean value of high level cloud cover";
+      }
+      if (parameterCode === "gust") {
+        return "Wind gust speed";
+      }
+      if (parameterCode === "pmin") {
+        return "Minimum precipitation intensity";
+      }
+      if (parameterCode === "pmax") {
+        return "Maximum precipitation intensity";
+      }
+      if (parameterCode === "spp") {
+        return "Percent of precipitation in frozen form";
+      }
+      if (parameterCode === "pcat") {
+        return "	Precipitation category";
+      }
+      if (parameterCode === "pmean") {
+        return "Mean precipitation intensity";
+      }
+      if (parameterCode === "pmedian") {
+        return "Median precipitation intensity";
+      }
+      if (parameterCode === "Wsymb2") {
+        return "Weather symbol";
+      } else {
+        return "unknown parameterCode";
+      }
+    },
+    fetchWeatherSymbol: function (symbolCode) {
+      if (symbolCode === 1) {
+        return "Clear sky";
+      } else {
+        return "unknown symbol";
+      }
     },
   },
 };
@@ -81,23 +153,14 @@ li {
     td {
       padding: 0 0.5rem;
     }
-    .param-name {
+    .parameterCode-name {
       text-align: right;
     }
-    .param-unit {
+    .parameterCode-unit {
       text-align: left;
     }
   }
-  // .spp,
-  // .pcat,
-  // .pmin,
-  // .pmean,
-  // .pmax,
-  // .pmedian,
-  // .tcc_mean,
-  // .lcc_mean,
-  // .mcc_mean,
-  // .hcc_mean,
+
   // .msl,
   // .t,
   // .vis,
@@ -105,103 +168,33 @@ li {
   // .ws,
   // .r,
   // .tstm,
+  // .tcc_mean,
+  // .lcc_mean,
+  // .mcc_mean,
+  // .hcc_mean,
   // .gust,
+  // .pmin,
+  // .pmax,
+  // .spp,
+  // .pcat,
+  // .pmean,
+  // .pmedian,
   // .Wsymb2 {
+  //   display: none;
   // }
-  // .spp {
-  //   &:after {
-  //     content: "Percent of precipitation in frozen form";
-  //   }
-  // }
-  // .pcat {
-  //   &:after {
-  //     content: "Precipitation category";
-  //   }
-  // }
-  // .pmin {
-  //   &:after {
-  //     content: "Minimum precipitation intensity";
-  //   }
-  // }
-  // .pmean {
-  //   &:after {
-  //     content: "Mean precipitation intensity";
-  //   }
-  // }
-  // .pmax {
-  //   &:after {
-  //     content: "Maximum precipitation intensity";
-  //   }
-  // }
-  // .pmedian {
-  //   &:after {
-  //     content: "Median precipitation intensity";
-  //   }
-  // }
-  // .tcc_mean {
-  //   &:after {
-  //     content: "Mean value of total cloud cover";
-  //   }
-  // }
-  // .lcc_mean {
-  //   &:after {
-  //     content: "Mean value of low level cloud cover";
-  //   }
-  // }
-  // .mcc_mean {
-  //   &:after {
-  //     content: "Mean value of medium level cloud cover";
-  //   }
-  // }
-  // .hcc_mean {
-  //   &:after {
-  //     content: "Mean value of high level cloud cover";
-  //   }
-  // }
-  // .msl {
-  //   &:after {
-  //     content: "Air pressure";
-  //   }
-  // }
-  // .t {
-  //   &:after {
-  //     content: "Air temperature";
-  //   }
-  // }
-  // .vis {
-  //   &:after {
-  //     content: "Horizontal visibility";
-  //   }
-  // }
-  // .wd {
-  //   &:after {
-  //     content: "Wind direction";
-  //   }
-  // }
-  // .ws {
-  //   &:after {
-  //     content: "Wind speed";
-  //   }
-  // }
-  // .r {
-  //   &:after {
-  //     content: "Relative humidity";
-  //   }
-  // }
-  // .tstm {
-  //   &:after {
-  //     content: "Thunder probability";
-  //   }
-  // }
-  // .gust {
-  //   &:after {
-  //     content: "Wind gust speed";
-  //   }
-  // }
-  // .Wsymb2 {
-  //   &:after {
-  //     content: "Weather symbol";
-  //   }
-  // }
+  .msl,
+  .tstm,
+  .tcc_mean,
+  .lcc_mean,
+  .mcc_mean,
+  .hcc_mean,
+  .pmin,
+  .pmax,
+  .spp,
+  .pcat,
+  .pmean,
+  .pmedian {
+    display: none;
+  }
 }
 </style>

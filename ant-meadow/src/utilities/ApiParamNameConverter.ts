@@ -6,12 +6,9 @@ class ApiParamNameConverter {
 
     translateParams(paramName) {
         console.log(paramName);
-        if (paramName === "") {
-            return 'Temperture';
-        }
-        else {
-            return 'unknown param'
-        }
+
+        return 'test';
+
     }
 
 }
