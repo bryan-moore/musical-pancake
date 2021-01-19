@@ -11,7 +11,7 @@
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Weather from "./components/Weather";
-import Clock from "./components/Clock.vue";
+import Clock from "./components/Clock";
 
 export default {
   name: "App",
